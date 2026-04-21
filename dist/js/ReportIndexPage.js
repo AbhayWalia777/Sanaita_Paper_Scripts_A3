@@ -20,7 +20,7 @@ $(document).ready(function () {
     cbxreportEmailcheckbox = document.getElementById('cbxSendmail');
 
     $('.select2').select2();
-    SwitchDataTheme();
+    
     // Calculate the maximum and minimum dates
     var today = new Date();
     var maxDate = new Date(today.getTime()).toISOString().split('T')[0];
@@ -318,44 +318,7 @@ $("#btnExport9").on('click', function () {
     }
 });
 
-function SwitchDataTheme() {
-    var data = localStorage.getItem('IsDark');
-    if (data == 'NO') {
-    }
-    else {
-        $('.content-wrapper').css({ 'background-color': 'black', 'color': 'white' });
-        $('.content').css({ 'background-color': 'black', 'color': 'white' });
-        $('.box-default').css({ 'background-color': 'black', 'color': 'white' });
-        $('.datatableheader').css('background-color', 'var(--main-color-on-layoutchange)');
-        $('li').css('color', 'white');
-        $('.content-header>.breadcrumb>li>a').css('color', 'white');
-        $('#mainWindow').css('background-color', 'black');
-        $('.box-title').css('color', 'white');
-        $('li.disabled > a').css({ 'background-color': 'black', 'color': 'white' });
-        $('.main-footer').css({ 'background-color': 'black', 'color': 'white' });
-        $('input').css({ 'border': '2px solid var(--main-color-on-layoutchange)', 'color': 'white', 'background-color': 'black' });
-        $('.form-control').css({ 'border': '2px solid var(--main-color-on-layoutchange)', 'color': 'white', 'background-color': 'black' });
-        $('#Export1_Start_Date').css({ 'background-color': 'gray', 'color': 'black' });
-        $('#Export1_End_Date').css({ 'background-color': 'gray', 'color': 'black' });
-        $('#Export5_Start_Date').css({ 'background-color': 'gray', 'color': 'black' });
-        $('#Export5_End_Date').css({ 'background-color': 'gray', 'color': 'black' });
 
-        var NewUI = '';
-        if (MySkin.SkinName != '') {
-            NewUI = MySkin.SkinName;
-        }
-        else {
-            if (typeof (Storage) !== 'undefined') {
-                NewUI = localStorage.getItem('skin');
-            }
-        }
-        if (NewUI == 'skin-black' || NewUI == 'skin-black-light') {
-        }
-        else {
-        }
-
-    }
-}
 
 $('#IsAdminWise').on('click', function () {
 

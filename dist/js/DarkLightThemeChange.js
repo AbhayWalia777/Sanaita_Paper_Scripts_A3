@@ -57,10 +57,10 @@ var NewUI='';
     if (NewUI == 'skin-yellow' || NewUI == 'skin-yellow-light') {
         $(':root').css('--main-color-on-layoutchange', 'gold');
     }
-SwitchDataTheme();
+//SwitchData_Theme();
 $('#PaperTradeNotificationCountLi').css('color','black');
 }
 }
-function SwitchDataTheme(){
+function SwitchData_Theme(){
 
 }
