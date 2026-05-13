@@ -1365,7 +1365,7 @@ function BindClick() {
     });
 
     $(document).on("click", ".DeleteCompletedTrade", function () {
-
+        if (!confirm("Are you sure you want to delete this trade?")) return;
         var e = $(this).data("bind");
 
         $.ajax({
