@@ -136,6 +136,8 @@ function SetAllNotificationDetails(item) {
         NotificationType = "Fund Manager Subscription";
     } else if (item.Type == 10) {
         NotificationType = "Trade Converted to Longterm";
+    } else if (item.Type == 11) {
+        NotificationType = "Trade Executed";
     }
     var isSeen = item.Seen == 0 ? " New" : "";
 

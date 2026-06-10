@@ -319,62 +319,17 @@ function PaperTradeNotification() {
 
         }
     });
-    //$.ajax({
-    //    url: '/Admin/FundInformationHistoryCount',
-    //    type: 'GET',
-    //    success: function (data) {
-
-    //        let currentCount = parseInt(data.Count) || 0;
-
-    //        $("#FundNotificationCount").html(currentCount);
-
-    //        $('#FundNotificationCount').html(`
-    //        <div style="position: absolute;top: 13px;right: 0;background-color: blue;color: white;border-radius: 50%;padding: 5px 8px;font-size: 12px;">
-    //            ${currentCount}
-    //        </div>
-    //    `);
-
-    //        // Show toastr only when count increases
-    //        if (currentCount > previousFundCount) {
-
-    //            toastr.options = {
-    //                closeButton: true,
-    //                progressBar: true,
-    //                timeOut: 0,
-    //                extendedTimeOut: 0,
-    //                tapToDismiss: true,
-    //                newestOnTop: true,
-    //                positionClass: "toast-top-right",
-    //                escapeHtml: false
-    //            };
-
-    //            // Create user list with <br>
-    //            let usersHtml = "";
-
-    //            if (data.Users && data.Users.length > 0) {
-    //                usersHtml = data.Users.join("<br>");
-    //            }
-
-    //            toastr.info(`
-    //            You have ${currentCount} pending fund requests
-    //            <br><br>
-    //            ${usersHtml}
-    //        `);
-    //        }
-
-    //        previousFundCount = currentCount;
-    //    },
-
-    //    error: function (error) {
-
-    //    }
-    //});
+    
     $.ajax({
         url: '/Admin/FundInformationHistoryCount',
         type: 'GET',
         success: function (data) {
 
             let currentCount = parseInt(data.Count) || 0;
+
+            // Get previous count from localStorage
+            let previousFundCount =
+                parseInt(localStorage.getItem("previousFundCount")) || 0;
 
             $('#FundNotificationCount').html(`
             <div style="
@@ -390,6 +345,7 @@ function PaperTradeNotification() {
             </div>
         `);
 
+            // Show toastr only if count increased
             if (currentCount > previousFundCount) {
 
                 toastr.options = {
@@ -456,7 +412,8 @@ function PaperTradeNotification() {
             `);
             }
 
-            previousFundCount = currentCount;
+            // Save latest count in localStorage
+            localStorage.setItem("previousFundCount", currentCount);
         }
     });
 }

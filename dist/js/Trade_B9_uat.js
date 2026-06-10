@@ -65,6 +65,18 @@ $("#rdPercentage").on("change", function () {
         localStorage.setItem("changetype", "rdAbsolute");
     });
 function initSocket() {
+    //const connection = new signalR.HubConnectionBuilder()
+    //    .withUrl("https://Prod-tradingapi.sanaitatechnologies.com/hub/market", {
+    //        withCredentials: true
+    //    })
+    //    .withAutomaticReconnect()
+    //    .build();
+    //const connection = new signalR.HubConnectionBuilder()
+    //    .withUrl("http://localhost:5000/hub/market", {
+    //        withCredentials: true
+    //    })
+    //    .withAutomaticReconnect()
+    //    .build();
     const connection = new signalR.HubConnectionBuilder()
         .withUrl("https://tradingapi.sanaitatechnologies.com/hub/market", {
             withCredentials: true
@@ -83,7 +95,7 @@ function initSocket() {
     connection.start()
         .then(() => {
             console.log("✅ Connected to market hub");
-            connection.invoke("SubscribeUser", $("input[Name=hdnActiveUserID]").val());
+            connection.invoke("SubscribeUser", $("#hdnActiveUserID").val());
         })
         .catch(err => {
             console.error("❌ Connection failed:", err);
@@ -223,7 +235,7 @@ function wt() {
 function setActiveSocketData() {
     var e = allActiveObj,
         t = allObj,
-        a = $("input[Name=hdnActiveUserID]").val(),
+        a = $("#hdnActiveUserID").val(),
         r = ActiveTradeAllData,
         i = 0,
         l = e.filter((e) => e.UserID == parseInt(a)),
@@ -363,7 +375,7 @@ function SetActiveTradeDetails(e, t) {
                 ')" type="button"><i class="fa fa-pencil"></i></button> '),
             (T = ' <button class="btn btn-primary btn-sm" onclick="SquareOff(' + e.ActiveTradeID + "," + d + "," + c + "," + a + "," + v + "," + e.BuyQtyWiseOrLot + "," + e.ObjScriptDTO.ScriptLotSize + ')" type="button">Sqr Off</button> '),
             (u =
-                ' <button class="btn btn-danger btn-sm btn-Sell" onclick="SquareOff(' +
+                ' <button class="btn btn-danger btn-sm" onclick="SquareOff(' +
                 e.ActiveTradeID +
                 "," +
                 d +
@@ -767,7 +779,7 @@ function SetTradeDataForWatch() {
 function SetWatchTradeDetailsForAdd(e) {
     var t = "'" + e.ScriptTradingSymbol.toString() + "'",
         a = "'" + $("#DrScriptExchange  option:selected").val().toString() + "'",
-        r = '<button class="btn btn-primary btn-sm btn-Sell" onclick="AddNewScript(' + t + "," + e.intWID + "," + a + "," + a + "," + e.UserID + "," + e.Lot + "," + e.size + ')" type="button"><i class="fa fa-plus"></i></button>';
+        r = '<button class="btn btn-primary btn-sm" onclick="AddNewScript(' + t + "," + e.intWID + "," + a + "," + a + "," + e.UserID + "," + e.Lot + "," + e.size + ')" type="button"><i class="fa fa-plus"></i></button>';
     $("#tblWatchListTradeList").DataTable().row.add([e.ScriptTradingSymbol.toString(), r, "", "", "", "", "", "", "", "", "", ""]).draw();
 }
 function AddNewScript(e, t, a, r, i, l, o) {
@@ -997,7 +1009,7 @@ function GetRequiredMargin() {
                 // Your code here
                 l = parseFloat($('#LblOrderPriceView').html());
             }
-            (d = { ScriptLotSize: t, ScriptCode: a, quantity: r, Totalwalletbalance: i, MisOrNot: e, Lastprice: l, TRADING_UNIT_TYPE: $("#dropTradingUnit").val(), ScriptExchange: s, CurrentPosition: $('#lblCurrentPosition').html() }),
+            (d = { UserID: $("#UserIdForAdmin").val(), ScriptLotSize: t, ScriptCode: a, quantity: r, Totalwalletbalance: i, MisOrNot: e, Lastprice: l, TRADING_UNIT_TYPE: $("#dropTradingUnit").val(), ScriptExchange: s, CurrentPosition: $('#lblCurrentPosition').html() }),
                 $.ajax({
                     url: "/Trade/GetRequiredMargin",
                     type: "GET",
@@ -1180,6 +1192,7 @@ function ProceedBuySell() {
                 Status: O,
                 iscbxAutoBinanceSlTrailEnabled: a,
                 TRADING_UNIT: M,
+                UserID: $("#UserIdForAdmin").val()
             },
             dataType: "json",
             async: !0,

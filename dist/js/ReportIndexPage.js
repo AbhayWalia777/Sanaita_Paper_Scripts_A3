@@ -44,12 +44,13 @@ $("#dropReportType").on('change', function () {
     $("#Export6").css("display", "none");
     $("#Export8").css("display", "none");
     $("#Export9").css("display", "none");
+    $("#Export10").css("display", "none");
     $("#ExportDate").css("display", "none");
     $("#Export5OrExport6").css("display", "none");
     $("#Export3OrExport4").css("display", "none");
     if ($("#dropReportType option:selected").val() != "" && $("#dropReportType option:selected").val() != null) {
-        if ($("#dropReportType option:selected").val() == "Export1") {
-            $("#Export1").css("display", "block");
+        if ($("#dropReportType option:selected").val() == "Export1"|| $("#dropReportType option:selected").val() == "Export10") {
+            $("#Export10").css("display", "block");
             $("#ExportDate").css("display", "block");
             $("#Export3OrExport4").css("display", "block");
         }
@@ -223,6 +224,18 @@ $("#btnExport1").on('click', function () {
         && $("#Export1_End_Date").val() != "" && $("#Export1_End_Date").val() != null) {
         CommonFunctionAdminWise();
         var url = "/Report/PrepareLedgerReport?reportType=" + $("#dropReportType option:selected").val() + "&startDate=" + $("#Export1_Start_Date").val() + "&endDate=" + $("#Export1_End_Date").val() + "&IsAdminWise=" + IsAdmin + "&UserID=" + UserID + "&IsNotOwn=" + IsNotOwn + "&IsReportEmailRequired=" + CbxReportEmail;
+        $('<a href="' + url + '" target="blank"></a>')[0].click();
+    }
+    else {
+        toastr.error("Please Fill All The Required Fields");
+    }
+});
+$("#btnExport10").on('click', function () {
+    if ($("#dropReportType option:selected").val() != "" && $("#dropReportType option:selected").val() != null
+        && $("#Export1_Start_Date").val() != "" && $("#Export1_Start_Date").val() != null
+        && $("#Export1_End_Date").val() != "" && $("#Export1_End_Date").val() != null) {
+        CommonFunctionAdminWise();
+        var url = "/Report/PrepareOrderLogReport?reportType=" + $("#dropReportType option:selected").val() + "&startDate=" + $("#Export1_Start_Date").val() + "&endDate=" + $("#Export1_End_Date").val() + "&IsAdminWise=" + IsAdmin + "&UserID=" + UserID + "&IsNotOwn=" + IsNotOwn + "&IsReportEmailRequired=" + CbxReportEmail;
         $('<a href="' + url + '" target="blank"></a>')[0].click();
     }
     else {

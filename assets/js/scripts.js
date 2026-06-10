@@ -6,34 +6,13 @@
     Preloader
     ==================================*/
 
-    //var preloader = $('#preloader');
-    //$(window).on('load', function() {
-    //    setTimeout(function() {
-    //        preloader.fadeOut('slow', function() { $(this).remove(); });
-    //    }, 300)
-    //});
-
-    $(document).ready(function () {
-        var preloader = $('#preloader');
-
-        // Function to hide the preloader
-        function hidePreloader() {
-            preloader.fadeOut('slow', function () {
-                $(this).remove();
-            });
-        }
-
-        // Handle window load event
-        $(window).on('load', function () {
-            // Set a timeout to ensure the preloader hides even if the load event doesn't fire
-            setTimeout(hidePreloader, 3000); // Adjust the delay as needed
-
-            // Additional check in case the load event doesn't fire
-            if (document.readyState === 'complete') {
-                hidePreloader();
-            }
-        });
+    var preloader = $('#preloader');
+    $(window).on('load', function() {
+        setTimeout(function() {
+            preloader.fadeOut('slow', function() { $(this).remove(); });
+        }, 300)
     });
+
     /*================================
     sidebar collapsing
     ==================================*/

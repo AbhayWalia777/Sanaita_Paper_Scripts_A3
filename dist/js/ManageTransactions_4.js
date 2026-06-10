@@ -526,6 +526,25 @@ $(document).keydown(function (e) {
                                     $("#buySellModel #TriggerPrice").attr("disabled", "disabled"),
                                     $("#buySellModel #TriggerPrice").attr("readonly", "readonly"));
             });
+        $(document).on("click", ".DeleteCompletedTrade", function () {
+            if (!confirm("Are you sure you want to delete this trade?")) return;
+            var e = $(this).data("bind");
+
+            $.ajax({
+                url: "/Trade/SoftDeleteCompletedTrade?ID=" + e,
+                type: "GET",
+                async: true,
+                success: function (e) {
+
+                    if (e != null) {
+                        toastr.success(e);
+                        SetCompletedTradeModalData();
+                    }
+                }
+            });
+
+        });
+
     });
 var pageno = 0;
 function removeScript(e, t) {
@@ -1363,26 +1382,6 @@ function BindClick() {
         });
 
     });
-
-    $(document).on("click", ".DeleteCompletedTrade", function () {
-        if (!confirm("Are you sure you want to delete this trade?")) return;
-        var e = $(this).data("bind");
-
-        $.ajax({
-            url: "/Trade/SoftDeleteCompletedTrade?ID=" + e,
-            type: "GET",
-            async: true,
-            success: function (e) {
-
-                if (e != null) {
-                    toastr.success(e);
-                    SetCompletedTradeModalData();
-                }
-            }
-        });
-
-    });
-
 }
 $("#btnMoreInfoCompletedTrade").on("click", function () {
     if ("--Select--" != $("#UserIds option:selected").text()) var e = $("#UserIds").val();
