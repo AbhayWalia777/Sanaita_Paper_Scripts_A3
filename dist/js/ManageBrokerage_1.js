@@ -44,12 +44,44 @@ function SetBrokerageData(item) {
     var FixedValue = item.Objtradescriptwise.IsFixed ? item.Objtradescriptwise.FixOrPerValue : 0;
     var PercentageValue = item.Objtradescriptwise.IsPercentage ? item.Objtradescriptwise.FixOrPerValue : 0;
 
-    var Scriptexchangestring = '\'' + item.Scriptexchangestring + '\'';
+    var Scriptexchangestring = '\'' + (item.Scriptexchangestring != "" ? item.Scriptexchangestring : item.ScriptExchange) + '\'';
     var ScriptExchange = '\'' + item.ScriptExchange + '\'';
     var ScriptName = item.Objtradescriptwise.ScriptName != null ? '\'' + item.Objtradescriptwise.ScriptName + '\'' : "";
     var deleteButton = '<a class="fa CrossButton" onclick="DeleteBrokerage(' + item.UserID + "," + Scriptexchangestring + "," + ScriptName + ')"></a>';
     //EditBrokerage(segment, segmentScript, ScriptName, NrmlPercent, NrmlFix, MisFix, MisPercentage)
-    var EditButton = '<a href="#" onclick="EditBrokerage(' + ScriptExchange + "," + Scriptexchangestring + "," + ScriptName + "," + item.Objtradescriptwise.NrmlPercentage + "," + item.Objtradescriptwise.NrmlFixed + "," + item.Objtradescriptwise.MisFixed + "," + item.Objtradescriptwise.MisPercentage + "," + item.Objtradescriptwise.NrmlExposure + "," + item.Objtradescriptwise.MisExposure + "," + item.Objtradescriptwise.SellRequiredMargin + ')">EDIT</a>';
+    //var EditButton = '<a href="#" onclick="EditBrokerage(' + ScriptExchange + "," + Scriptexchangestring + "," + ScriptName + "," + item.Objtradescriptwise.NrmlPercentage + "," + item.Objtradescriptwise.NrmlFixed + "," + item.Objtradescriptwise.MisFixed + "," + item.Objtradescriptwise.MisPercentage + "," + item.Objtradescriptwise.NrmlExposure + "," + item.Objtradescriptwise.MisExposure + "," + item.Objtradescriptwise.SellRequiredMargin + ')">EDIT</a>';
+
+    //$('#broker_table').DataTable().row.add([
+    //    item.ScriptExchange,
+    //    item.Objtradescriptwise.ScriptName,
+    //    item.Objtradescriptwise.NrmlPercentage,
+    //    item.Objtradescriptwise.MisPercentage,
+    //    item.Objtradescriptwise.NrmlExposure,
+    //    item.Objtradescriptwise.NrmlFixed,
+    //    item.Objtradescriptwise.MisFixed,
+    //    item.Objtradescriptwise.MisExposure,
+    //    item.Objtradescriptwise.SellRequiredMargin,
+    //    item.Objtradescriptwise.ScriptName != null ? EditButton : "",
+    //    item.Objtradescriptwise.ScriptName != null ? deleteButton : ""
+    //]).draw();
+    var EditButton = '<a href="#" onclick="EditBrokerage('
+        + ScriptExchange + ","
+        + Scriptexchangestring + ","
+        + ScriptName + ","
+        + item.Objtradescriptwise.NrmlPercentage + ","
+        + item.Objtradescriptwise.NrmlFixed + ","
+        + item.Objtradescriptwise.MisFixed + ","
+        + item.Objtradescriptwise.MisPercentage + ","
+        + item.Objtradescriptwise.NrmlExposure + ","
+        + item.Objtradescriptwise.MisExposure + ","
+        + item.Objtradescriptwise.MisEquityExposure + ","
+        + item.Objtradescriptwise.MisFutureExposure + ","
+        + item.Objtradescriptwise.MisOptionsExposure + ","
+        + item.Objtradescriptwise.NRMLEquityExposure + ","
+        + item.Objtradescriptwise.NRMLFutureExposure + ","
+        + item.Objtradescriptwise.NRMLOptionsExposure + ","
+        + item.Objtradescriptwise.SellRequiredMargin
+        + ')">EDIT</a>';
 
     $('#broker_table').DataTable().row.add([
         item.ScriptExchange,
@@ -61,9 +93,16 @@ function SetBrokerageData(item) {
         item.Objtradescriptwise.MisFixed,
         item.Objtradescriptwise.MisExposure,
         item.Objtradescriptwise.SellRequiredMargin,
+        item.Objtradescriptwise.MisEquityExposure ,
+        item.Objtradescriptwise.MisFutureExposure ,
+        item.Objtradescriptwise.MisOptionsExposure ,
+        item.Objtradescriptwise.NRMLEquityExposure ,
+        item.Objtradescriptwise.NRMLFutureExposure ,
+        item.Objtradescriptwise.NRMLOptionsExposure ,
         item.Objtradescriptwise.ScriptName != null ? EditButton : "",
         item.Objtradescriptwise.ScriptName != null ? deleteButton : ""
     ]).draw();
+
 }
 $(document).on('change', '#Drp-Segment', function () {
     if ($('#Drp-Segment option:selected').text() != "")
@@ -89,7 +128,7 @@ function SetScriptNameData() {
 function SetNameResult(results) {
     $('#Drp-Symbol').html('');
     if (results != null && results.Data) {
-
+        $('#Drp-Symbol').append(new Option("ALL","ALL"));
         results.Data.forEach(function (item) {
             var result = item.ScriptName;
             $('#Drp-Symbol').append(new Option(result, result));
@@ -114,19 +153,64 @@ function DeleteBrokerage(UserID, ScriptExchange, ScriptName) {
         }
     });
 }
-function EditBrokerage(segment, segmentScript, ScriptName, NrmlPercent, NrmlFix, MisFix, MisPercentage, NrmlExposure, MisExposure, SellRequiredMargin) {
+//function EditBrokerage(segment, segmentScript, ScriptName, NrmlPercent, NrmlFix, MisFix, MisPercentage, NrmlExposure, MisExposure, SellRequiredMargin) {
+//    //$('select').attr('disabled', 'disabled');
+//    $('#Drp-Segment option[value=' + segmentScript + ']').attr('selected', 'selected');
+//    $('#Drp-Symbol').html('<option value="' + ScriptName + '">' + ScriptName + '</option>');
+//    $('#NrmlPercent').val(NrmlPercent);
+//    $('#NrmlFix').val(NrmlFix);
+//    $('#MisPercent').val(MisPercentage);
+//    $('#MisFix').val(MisFix);
+//    $('#NrmlExposure').val(NrmlExposure);
+//    $('#MisExposure').val(MisExposure);
+//    $('#SellRequiredMargin').val(SellRequiredMargin);
+
+//}
+function EditBrokerage(
+    segment,
+    segmentScript,
+    ScriptName,
+    NrmlPercent,
+    NrmlFix,
+    MisFix,
+    MisPercentage,
+    NrmlExposure,
+    MisExposure,
+    MisEquityExposure,
+    MisFutureExposure,
+    MisOptionsExposure,
+    NRMLEquityExposure,
+    NRMLFutureExposure,
+    NRMLOptionsExposure,
+    SellRequiredMargin
+) {
     //$('select').attr('disabled', 'disabled');
+
     $('#Drp-Segment option[value=' + segmentScript + ']').attr('selected', 'selected');
     $('#Drp-Symbol').html('<option value="' + ScriptName + '">' + ScriptName + '</option>');
+
     $('#NrmlPercent').val(NrmlPercent);
     $('#NrmlFix').val(NrmlFix);
     $('#MisPercent').val(MisPercentage);
     $('#MisFix').val(MisFix);
+
+    // Existing fields
     $('#NrmlExposure').val(NrmlExposure);
     $('#MisExposure').val(MisExposure);
-    $('#SellRequiredMargin').val(SellRequiredMargin);
 
+    // New Intraday Exposure fields
+    $('#MisEquityExposure').val(MisEquityExposure);
+    $('#MisFutureExposure').val(MisFutureExposure);
+    $('#MisOptionsExposure').val(MisOptionsExposure);
+
+    // New Normal Exposure fields
+    $('#NRMLEquityExposure').val(NRMLEquityExposure);
+    $('#NRMLFutureExposure').val(NRMLFutureExposure);
+    $('#NRMLOptionsExposure').val(NRMLOptionsExposure);
+
+    $('#SellRequiredMargin').val(SellRequiredMargin);
 }
+
 $('#save-btn').on('click', function () {
     $('#Objtradescriptwise_FromPage').val('AllUsers');
     $('#ManageUserForm').submit();

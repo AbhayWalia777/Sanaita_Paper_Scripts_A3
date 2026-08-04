@@ -608,6 +608,11 @@ function SetWatchTradeDetails(e) {
     w || BtnIds.push({ BuyBtnId: h, SellBtnId: S, DeleteBtnId: "btnName" + e.ScriptCode, MarketDepthBtnId: P });
 }
 $(document).ready(function () {
+    $('#UserIdForAdmin').select2({
+        placeholder: "Search user...",
+        allowClear: true,
+        width: '100%'
+    });
     var request = $.ajax({
         url: "/Admin/GetBalance",
         type: "GET",
@@ -615,6 +620,9 @@ $(document).ready(function () {
         async: true,
         success: function (data) {
             $("#WalletBalance").text(data.amount);
+            if (data.HoldBalance > 0) {
+                $('#HoldBalanceDiv').html('Hold Balance: ' + data.HoldBalance);
+            }
         }
     });
     (allowedTradingUnit = JSON.parse($("#TradingUnitAccess").val())), (isLiveOrder = $("#IsLive").val()), (Companyinitials = $("#CompanyInitial").val());
@@ -973,7 +981,11 @@ function buySellPopUp(e, t, a, r, i, l, o, n, s = 1, d = 1, c = 0, p = 0, T = 0,
                     : "SL-M" == v && $("input[Name=MarketType]#rbtnSLM").trigger("click")),
         null != g && "" != g && ("MIS" == g ? $("input[Name=ProductType]#rbtnIntraday").prop("checked", !0) : $("input[Name=ProductType]#rbtnNrml").prop("checked", !0), $("#tgtSLDiv").show()),
         "COMPLETE" == h && $(".upperClause :input").attr("disabled", "disabled"),
-        $("#buySellModel").modal({ backdrop: !1, show: !0 }),
+        $("#buySellModel").modal({
+            backdrop: 'static',
+            keyboard: false,
+            show: true
+        }),
         $(".modal-dialog").draggable({ handle: ".modal-header" }),
         $("body").removeClass("modal-open"),
         "" != L && $("#dropTradingUnit option[value=" + L + "]").attr("selected", "selected"),

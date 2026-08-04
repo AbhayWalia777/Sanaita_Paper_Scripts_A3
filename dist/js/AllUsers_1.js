@@ -97,6 +97,11 @@ function SetAllUsersDetails(item) {
     Action += ViewAllUsers;
     var netProfit = item.Totalloss + item.Totalprofit;
     var getLevel = $('#HdnLevel').text();
+    var Balance = item.Balance;
+    if (item.HoldBalance > 0)
+    {
+        Balance += ' Hold: ' + item.HoldBalance;
+    }
     if (getLevel != 1) {
         var table = $('#tblAllUserList').DataTable().row.add([
             item.CreatedDateString,
@@ -107,7 +112,7 @@ function SetAllUsersDetails(item) {
             item.ExpiryDateString,
             item.RoleName,
             netProfit.toFixed(2),
-            item.Balance,
+            Balance,
             item.IsActive,
             '<div class="d-flex">' + Action + '</div>'
         ]).order([0, 'desc']).draw();
@@ -123,7 +128,7 @@ function SetAllUsersDetails(item) {
             item.ExpiryDateString,
             item.RoleName,
             netProfit.toFixed(2),
-            item.Balance,
+            Balance,
             item.IsActive,
             Action
         ]).order([0, 'desc']).draw();

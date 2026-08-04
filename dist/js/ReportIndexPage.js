@@ -24,7 +24,8 @@ $(document).ready(function () {
     // Calculate the maximum and minimum dates
     var today = new Date();
     var maxDate = new Date(today.getTime()).toISOString().split('T')[0];
-    var minDate = new Date(today.getTime() - 15 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+    //var minDate = new Date(today.getTime() - 15 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+    var minDate = new Date(today.getTime() - 60 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
     $('#Export1_Start_Date').val(new Date(new Date().getTime()).toISOString().split('T')[0]);
     $('#Export1_End_Date').val(new Date(new Date().getTime()).toISOString().split('T')[0]);
 
@@ -49,7 +50,12 @@ $("#dropReportType").on('change', function () {
     $("#Export5OrExport6").css("display", "none");
     $("#Export3OrExport4").css("display", "none");
     if ($("#dropReportType option:selected").val() != "" && $("#dropReportType option:selected").val() != null) {
-        if ($("#dropReportType option:selected").val() == "Export1"|| $("#dropReportType option:selected").val() == "Export10") {
+        if ($("#dropReportType option:selected").val() == "Export1") {
+            $("#Export1").css("display", "block");
+            $("#ExportDate").css("display", "block");
+            $("#Export3OrExport4").css("display", "block");
+        }
+        else if ($("#dropReportType option:selected").val() == "Export10") {
             $("#Export10").css("display", "block");
             $("#ExportDate").css("display", "block");
             $("#Export3OrExport4").css("display", "block");
@@ -63,7 +69,7 @@ $("#dropReportType").on('change', function () {
             $("#ExportDate").css("display", "block");
             $("#Export3").css("display", "block");
         }
-        else if ($("#dropReportType option:selected").val() == "Export4" || $("#dropReportType option:selected").val() == "Export7") {
+        else if ($("#dropReportType option:selected").val() == "Export4" || $("#dropReportType option:selected").val() == "Export7" || $("#dropReportType option:selected").val() == "Export11") {
             $("#Export3OrExport4").css("display", "block");
             $("#ExportDate").css("display", "block");
             $("#Export4").css("display", "block");

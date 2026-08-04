@@ -599,6 +599,10 @@ $(document).ready(function () {
         async: true,
         success: function (data) {
             $("#WalletBalance").text(data.amount);
+            if (data.HoldBalance > 0)
+            {
+                $('#HoldBalanceDiv').html('Hold Balance: ' + data.HoldBalance);
+            }
         }
     });
     (allowedTradingUnit = JSON.parse($("#TradingUnitAccess").val())), (isLiveOrder = $("#IsLive").val()), (Companyinitials = $("#CompanyInitial").val());
